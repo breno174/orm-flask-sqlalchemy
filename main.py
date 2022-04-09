@@ -2,16 +2,14 @@ from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 
 
-# Instanciando o Flask
 app = Flask(__name__)
 
-# Conectando a aplicação ao banco de dados.
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://seuUsuário:suaSenha@localhost:5432/nomeDoSeuBanco'
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://chan:0303@localhost:5432/model_example"
 
-# A opção TRACK_MODIFICATIONS é depreciated, ela envia um aviso antes e 
-# depois de uma alteração ser confirmada no banco de dados.
-# Por isso, iremos desativá-la.
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# Configuramos o SQLAlchemy com o flask, agora precisamos instanciá-lo.
 db = SQLAlchemy(app)
+
+class ProductModel(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(100), nullable=False)
+  description = db.Column(db.String(244))
